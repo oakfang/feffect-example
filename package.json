@@ -1,0 +1,22 @@
+{
+  "name": "npm-stats",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nyc ava -v"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "feffect": "^1.1.0",
+    "request": "^2.75.0",
+    "rewire": "^2.5.2"
+  },
+  "devDependencies": {
+    "ava": "^0.16.0",
+    "nyc": "^8.3.0",
+    "proxyquire": "^1.7.10"
+  }
+}
