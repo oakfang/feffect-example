@@ -1,5 +1,10 @@
-const { run } = require('./env');
+const { interpret } = require('intention');
+const request = require('request');
 const { main } = require('./logic');
-const world = require('./world');
+const reality = require('./reality')({
+  request,
+  console,
+  process,
+});
 
-run(main(), world);
+interpret(main(), reality);

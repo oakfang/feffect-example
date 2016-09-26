@@ -1,7 +1,7 @@
-const { effect, impure } = require('../env');
+const { intent, impure } = require('intention');
 
 const sanitisePackage = package => package.replace(/\//g, '%2F');
-const getStats = (package, period) => effect('write:net', {
+const getStats = (package, period) => intent('write:net', {
   url: `https://api.npmjs.org/downloads/range/${period}/${sanitisePackage(package)}`,
   json: true,
 });

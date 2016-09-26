@@ -1,5 +1,5 @@
 import test from 'ava';
-import { run, ensure } from '../env';
+import { interpret, ensure } from 'intention';
 import { getStats, reduceStats, getStatsWithPeriod } from '../logic/npm';
 import { log, getCliArgs, main } from '../logic';
 
@@ -12,7 +12,7 @@ test('npm:getStatsWithPeriod', async t => {
   const world = {
     'write:net': (_, resolve) => resolve(5),
   };
-  const { stats, period } = await run(getStatsWithPeriod('meow', 'foo'), world);
+  const { stats, period } = await interpret(getStatsWithPeriod('meow', 'foo'), world);
   t.is(stats, 5);
   t.is(period, 'foo');
 });
@@ -22,7 +22,7 @@ test('npm:reduceStats', t => {
     downloads: [
       { downloads: 5 },
       { downloads: 7 },
-    ]
+    ],
   }), 12);
   t.is(reduceStats({}), 0);
 });
@@ -35,17 +35,18 @@ test('main:impure', async t => {
       downloads: [
         { downloads: 5 },
         { downloads: 7 },
-      ]
+      ],
     }),
     'read:argv': (_, resolve) => resolve(['feffect']),
-    'write:log': ({ args }, resolve, reject) => (args[0] !== 'xow' && args[0] !== 12) ? reject() : resolve(),
+    'write:log': ({ args }, resolve, reject) =>
+      (args[0] !== 'xow' && args[0] !== 12) ? reject() : resolve(),
   };
-  await run(main(), world);
+  await interpret(main(), world);
   world['read:argv'] = (_, resolve) => resolve([]);
   try {
-    await run(main(), world);
+    await interpret(main(), world);
     t.fail('Should fail');
-  } catch(e) {
+  } catch (e) {
     t.pass('Failed');
   }
 });
