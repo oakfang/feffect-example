@@ -1,7 +1,13 @@
 import test from 'ava';
-import { interpret, ensure } from 'intention';
+import { interpret, isIntent } from 'intention';
 import { getStats, reduceStats, getStatsWithPeriod } from '../logic/npm';
 import { log, getCliArgs, main } from '../logic';
+
+const ensure = (it, eType, eValues) => (
+  isIntent(it) &&
+  (!eType || eType === it.type) &&
+  (!eValues || Object.keys(eValues).reduce((flag, key) => flag || eValues[key] === it.values[key]))
+);
 
 test('npm:getStats', t => t.truthy(ensure(getStats('xow', 'day'), 'write:net', {
   json: true,

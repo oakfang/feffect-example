@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "intention": "^1.0.0",
+    "intention": "^2.0.0",
     "request": "^2.75.0"
   },
   "devDependencies": {
